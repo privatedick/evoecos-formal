@@ -1,0 +1,10 @@
+{
+  "agent_type": "coder",
+  "strategy": "balanced",
+  "max_agents": 3,
+  "layer": "L2",
+  "confidence": 0.75,
+  "reason": "EvoEcos L2 routing (complexity=0.13, uncertainty=0.00, confidence=0.75, budget=1.00)",
+  "task": "continue in the order you recommended.",
+  "timestamp": "2026-06-14T16:10:15.643Z"
+}

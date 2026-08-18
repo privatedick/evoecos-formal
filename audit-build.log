@@ -1,0 +1,25 @@
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [3396/3402] Built Kernel (599ms)
+✔ [3397/3402] Built ProvablyCorrectControllers.ObservationalDichotomy (2.7s)
+✔ [3398/3402] Built ProvablyCorrectControllers.SafetyBoundary (2.8s)
+⚠ [3399/3402] Built ProvablyCorrectControllers.BangBangTheorem (3.6s)
+warning: ProvablyCorrectControllers/BangBangTheorem.lean:102:21: `Real.exp_lt_exp_of_lt` has been deprecated: Use `Real.exp_strictMono` instead
+
+Note: The updated constant has a different type:
+  StrictMono rexp
+instead of
+  ∀ {x y : ℝ}, x < y → rexp x < rexp y
+warning: ProvablyCorrectControllers/BangBangTheorem.lean:152:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+✔ [3400/3402] Built ProvablyCorrectControllers (2.5s)
+Some required targets logged failures:
+- DefiMech.AMM
+- DefiMech.Oracle
+- DefiMech.Lending
+- DefiMech.LiquidStaking
+error: build failed

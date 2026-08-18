@@ -1,0 +1,5 @@
+warning: EvoEcos/CompanionMonoid.lean:309:5: unused variable `h_neq`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [3382/3383] Built EvoEcos (2.6s)
+Build completed successfully (3383 jobs).
