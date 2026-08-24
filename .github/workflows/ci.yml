@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lean-build:
+    name: Lean build (0 sorry / 0 repo-declared axiom)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # `lake build` also runs the `AxiomAudit` default target, which is the
+      # real sorry/axiom gate: it walks every declaration this repository's
+      # modules contribute to the environment and fails if any depends on an
+      # axiom outside Lean's standard three. That catches `sorryAx` in any
+      # syntactic position (`exact sorry`, `:= sorry`, `<;> sorry`), which a
+      # line-anchored grep would miss.
+      - uses: leanprover/lean-action@v1
+      # Independent of the axiom footprint: replay the built environment
+      # through the kernel, catching anything that got into the environment
+      # without passing it (unsafe/metaprogramming routes, corrupt oleans).
+      # `AxiomAudit` imports every library in this repo (Architecture,
+      # EvoEcos, InfoTheory, Kernel, ProvablyCorrectControllers, Thresholds),
+      # so checking it alone covers the whole corpus.
+      #
+      # leanchecker is NOT a sorry check — it exits 0 on `sorryAx`, since that
+      # is a legitimate axiom to the kernel. AxiomAudit above is what makes
+      # the 0-sorry claim; this checks a different property.
+      - name: Replay environment through the kernel (leanchecker)
+        run: lake env leanchecker AxiomAudit
