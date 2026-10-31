@@ -19,6 +19,15 @@ jobs:
       # syntactic position (`exact sorry`, `:= sorry`, `<;> sorry`), which a
       # line-anchored grep would miss.
       - uses: leanprover/lean-action@v1
+      # On failure, surface Lean's error lines and the failed-target list as
+      # annotations, so the cause is on the run's summary page rather than
+      # only inside the raw log. Failed jobs aren't cached, so this re-runs
+      # just the failing modules.
+      - name: Annotate build errors
+        if: failure()
+        run: |
+          lake build 2>&1 | grep -E '^(error|✖)|: error|^- ' \
+            | head -60 | sed 's/^/::error title=lake build::/' || true
       # Independent of the axiom footprint: replay the built environment
       # through the kernel, catching anything that got into the environment
       # without passing it (unsafe/metaprogramming routes, corrupt oleans).
