@@ -68,7 +68,9 @@ def offenders (env : Environment) : Array (Name × Array Name) := Id.run do
 modules that carry source declaration ranges and are not internal details
 (this drops equation lemmas, `proof_n` auxiliaries and similar compiler
 output). `lemma` elaborates to a theorem, so it is counted here too. This is
-the number the README cites, derived from the environment rather than a grep. -/
+larger than the README's count of `theorem`/`lemma` commands, because
+Prop-valued instances and similar declarations are theorems too; it is
+reported so a drop (a module silently falling out of the build) is visible. -/
 def sourceTheorems (env : Environment) : Array Name := Id.run do
   let hdr := env.header
   let mut out : Array Name := #[]
@@ -91,8 +93,8 @@ run_cmd do
   for c in thms do
     if (← Lean.Elab.Command.liftCoreM (findDeclarationRanges? c)).isSome then
       withRanges := withRanges + 1
-  Lean.logInfo m!"declaration count: {withRanges} source theorem/lemma \
-    declarations ({thms.size} non-internal theorems in the environment)"
+  Lean.logInfo m!"declaration count: {withRanges} theorems with source positions \
+    ({thms.size} non-internal theorems in the environment)"
 
 open AxiomAudit in
 run_cmd do
