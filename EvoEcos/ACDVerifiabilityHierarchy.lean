@@ -342,7 +342,7 @@ theorem card_range_lt_of_noninjective
     Fintype.card_le_of_injective g hgInj
   -- For strict inequality: by_contra
   by_contra hge
-  push_neg at hge
+  push Not at hge
   have heq : Fintype.card (Set.range obs) = Fintype.card W :=
     Nat.le_antisymm hle hge
   -- g is bijective: injective + same card

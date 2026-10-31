@@ -74,7 +74,7 @@ theorem classification_counterfactual_exists :
       ¬ ∀ w1 w2, descriptionObs w1 = descriptionObs w2 → truth w1 = truth w2 := by
   have h := description_obs_noninjective
   rw [Function.Injective] at h
-  push_neg at h
+  push Not at h
   obtain ⟨a, b, h_obs, h_ne⟩ := h
   classical
   refine ⟨fun w => if w = a then true else false, ?_⟩

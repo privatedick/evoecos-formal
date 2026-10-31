@@ -761,7 +761,7 @@ theorem l1_maintainStability_preserves_invariants (s : SystemState)
             -- Unfold the named constant so the rest of the proof works with numerics
             have h_old_lt_wat : s.l1.stability.val < wallActivateThreshold := by
               by_contra h_old_ge
-              push_neg at h_old_ge
+              push Not at h_old_ge
               simp [wallActivateThreshold] at h_old_ge h_stability
               -- By cases on stress < 0.3 (the branch in maintainStability)
               by_cases h_stress : s.l1.stress.val < 0.3

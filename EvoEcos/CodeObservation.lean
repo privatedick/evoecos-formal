@@ -82,7 +82,7 @@ theorem code_analysis_counterfactual_exists :
       ¬ ∀ w1 w2, sourceObs w1 = sourceObs w2 → truth w1 = truth w2 := by
   have h := source_obs_noninjective
   rw [Function.Injective] at h
-  push_neg at h
+  push Not at h
   obtain ⟨a, b, h_obs, h_ne⟩ := h
   classical
   refine ⟨fun w => if w = a then true else false, ?_⟩

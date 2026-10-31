@@ -115,3 +115,35 @@ import EvoEcos.L3Affordability
 import EvoEcos.DecisionCost
 import EvoEcos.ClampedUpdateCommute
 import EvoEcos.PersuasionOperator
+
+-- Modules that were in the tree but imported by no root, so neither CI nor
+-- AxiomAudit ever compiled them. Importing them here puts them under the gate.
+import EvoEcos.BoundaryACD
+import EvoEcos.CBFBarrier
+import EvoEcos.CompanionGame
+import EvoEcos.CompanionUniversality
+import EvoEcos.ComponentTrust
+import EvoEcos.ContextualityACD
+import EvoEcos.Diversification
+import EvoEcos.Duality
+import EvoEcos.DynamicBounds
+import EvoEcos.FibonacciParity
+import EvoEcos.GoalSelector
+import EvoEcos.HoldingIdentification
+import EvoEcos.IsomorphismCorollaries
+import EvoEcos.L1Operational
+import EvoEcos.L2Modeling
+import EvoEcos.MultiTrackOrchestration
+import EvoEcos.ProvabilityLogic
+import EvoEcos.ResourceGap
+import EvoEcos.RiceBoundary
+import EvoEcos.SpectralGapTheorem
+import EvoEcos.SpectrumGalois
+import EvoEcos.SpectrumGalois_EvalToy
+import EvoEcos.ThermostatSetpoint
+import EvoEcos.ToolUse
+import EvoEcos.ToolUseEcosystem
+import EvoEcos.TrustBoundaries
+import EvoEcos.UnifiedCompanionTheory
+import EvoEcos.WallDelayHarm
+import EvoEcos.WallStoppingTime

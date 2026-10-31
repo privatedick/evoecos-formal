@@ -180,7 +180,7 @@ theorem noninjective_has_counterfactual
     ∃ (truth : W → Bool),
       ¬ (∀ w1 w2, sys.obs w1 = sys.obs w2 → truth w1 = truth w2) := by
   rw [Function.Injective] at h_noninj
-  push_neg at h_noninj
+  push Not at h_noninj
   obtain ⟨a, b, h_obs, h_ne⟩ := h_noninj
   classical
   refine ⟨fun w => if w = a then true else false, ?_⟩
@@ -212,7 +212,7 @@ theorem permanent_residue_of_noninjective
       PermanentCounterfactual (sys.temporalOfObs cf) cf ∧
       ¬ (∀ w1 w2, sys.obs w1 = sys.obs w2 → cf w1 = cf w2) := by
   rw [Function.Injective] at h_noninj
-  push_neg at h_noninj
+  push Not at h_noninj
   obtain ⟨a, b, h_obs_ab, h_ne_ab⟩ := h_noninj
   classical
   refine ⟨fun w => if w = a then true else false, ?_, ?_⟩
@@ -238,7 +238,7 @@ theorem architectural_dominance [Fintype W] [DecidableEq O]
     Fintype.card (Set.range sys.obs) < Fintype.card W := by
   classical
   rw [Function.Injective] at h_noninj
-  push_neg at h_noninj
+  push Not at h_noninj
   obtain ⟨w1, w2, hobs, hwne⟩ := h_noninj
   exact card_range_lt_of_noninjective sys.obs ⟨w1, w2, hwne, hobs⟩
 
@@ -276,7 +276,7 @@ theorem noninjective_has_empty_obs
     (h_noninj : ¬ Function.Injective sys.obs) :
     ∃ o : O, sys.empty_obs o := by
   rw [Function.Injective] at h_noninj
-  push_neg at h_noninj
+  push Not at h_noninj
   obtain ⟨a, b, h_obs, h_ne⟩ := h_noninj
   exact ⟨sys.obs a, a, b, rfl, h_obs.symm ▸ rfl, h_ne⟩
 
@@ -290,7 +290,7 @@ theorem noninjective_iff_exists_empty :
   · exact sys.noninjective_has_empty_obs
   · intro ⟨o, w1, w2, hw1, hw2, hne⟩
     rw [Function.Injective]
-    push_neg
+    push Not
     exact ⟨w1, w2, hw1 ▸ hw2.symm, hne⟩
 
 /-- The counterfactual witness from Result 4 detects emptiness.
@@ -303,7 +303,7 @@ theorem counterfactual_witness_is_empty
       ¬ (∀ w1 w2, sys.obs w1 = sys.obs w2 → truth w1 = truth w2) ∧
       sys.empty_obs (sys.obs w) := by
   rw [Function.Injective] at h_noninj
-  push_neg at h_noninj
+  push Not at h_noninj
   obtain ⟨a, b, h_obs, h_ne⟩ := h_noninj
   classical
   refine ⟨fun w => if w = a then true else false, a, ?_, ?_, ?_⟩

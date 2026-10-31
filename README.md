@@ -3,9 +3,10 @@
 Machine-checked invariants for layered agent architectures — the kind where a
 supervisory layer gates a planning layer on a safety signal.
 
-Lean 4 + Mathlib. **1,227 theorem/lemma declarations across 117 files, 0 `sorry`,
+Lean 4 + Mathlib. **1,274 theorem/lemma declarations across 116 modules, 0 `sorry`,
 and no axiom outside Lean's standard three** — enforced by the build, not claimed
-in prose.
+in prose. Every module is imported by a build root, so CI compiles and audits all
+of them; each CI run reports the environment's theorem count as an annotation.
 
 ## Why this exists
 

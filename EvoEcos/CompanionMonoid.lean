@@ -306,7 +306,7 @@ theorem witness_unsafe_is_unsafe (d : ℝ) (d_pos : 0 < d) :
     strictly reduces the effective response. This is why multi-companion hurts:
     the weaker companion drags down the stronger one. -/
 theorem multi_companion_harm (c₁ c₂ : Companion)
-    (h_neq : c₁.response ≠ c₂.response)
+    (_h_neq : c₁.response ≠ c₂.response)
     (h₁_stronger : c₁.response > c₂.response) :
     (companionMin c₁ c₂).response < c₁.response ∧
     (companionMin c₁ c₂).response = c₂.response := by

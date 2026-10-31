@@ -438,7 +438,7 @@ theorem l1_idle_implies_stability_ge_05
     s.l1.stability.val ≥ 0.5 := by
   -- Prove by contrapositive using action selection policy
   by_contra h_lt_05
-  push_neg at h_lt_05
+  push Not at h_lt_05
   -- h_lt_05: s.l1.stability.val < 0.5
   -- Apply action selection policy
   have h_policy_applied := h_policy h_active
@@ -467,7 +467,7 @@ theorem l1_idle_implies_stability_ge_05
             contradiction
           · -- stability ≥ 0.5, contradicts h_lt_05
             have h_ge_05 : s.l1.stability.val ≥ 0.5 := by
-              push_neg at h_lt_05_inner
+              push Not at h_lt_05_inner
               exact h_lt_05_inner
             linarith [h_lt_05, h_ge_05]
 

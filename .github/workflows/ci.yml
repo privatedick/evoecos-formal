@@ -19,6 +19,15 @@ jobs:
       # syntactic position (`exact sorry`, `:= sorry`, `<;> sorry`), which a
       # line-anchored grep would miss.
       - uses: leanprover/lean-action@v1
+      # On failure, surface Lean's error lines and the failed-target list as
+      # annotations, so the cause is on the run's summary page rather than
+      # only inside the raw log. Failed jobs aren't cached, so this re-runs
+      # just the failing modules.
+      - name: Annotate build errors
+        if: failure()
+        run: |
+          lake build 2>&1 | grep -E '^(error|✖)|: error|^- ' \
+            | head -60 | sed 's/^/::error title=lake build::/' || true
       # Independent of the axiom footprint: replay the built environment
       # through the kernel, catching anything that got into the environment
       # without passing it (unsafe/metaprogramming routes, corrupt oleans).
@@ -31,3 +40,11 @@ jobs:
       # the 0-sorry claim; this checks a different property.
       - name: Replay environment through the kernel (leanchecker)
         run: lake env leanchecker AxiomAudit
+      # Surface the environment-derived theorem count (logged by AxiomAudit)
+      # as a run annotation, so the README's headline number is visible on
+      # every build instead of only inside the raw log. Fails if the line is
+      # missing, which would mean the count itself stopped being produced.
+      - name: Report declaration count
+        run: |
+          lake env lean AxiomAudit.lean 2>&1 | grep -o 'declaration count: .*' \
+            | sed 's/^/::notice title=Theorem count::/'
