@@ -31,3 +31,11 @@ jobs:
       # the 0-sorry claim; this checks a different property.
       - name: Replay environment through the kernel (leanchecker)
         run: lake env leanchecker AxiomAudit
+      # Surface the environment-derived theorem count (logged by AxiomAudit)
+      # as a run annotation, so the README's headline number is visible on
+      # every build instead of only inside the raw log. Fails if the line is
+      # missing, which would mean the count itself stopped being produced.
+      - name: Report declaration count
+        run: |
+          lake env lean AxiomAudit.lean 2>&1 | grep -o 'declaration count: .*' \
+            | sed 's/^/::notice title=Theorem count::/'
