@@ -87,7 +87,7 @@ open AxiomAudit in
 run_cmd do
   let env ← Lean.getEnv
   let thms := sourceTheorems env
-  let mut withRanges := 0
+  let mut withRanges : Nat := 0
   for c in thms do
     if (← Lean.Elab.Command.liftCoreM (findDeclarationRanges? c)).isSome then
       withRanges := withRanges + 1
