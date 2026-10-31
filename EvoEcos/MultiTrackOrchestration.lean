@@ -70,7 +70,7 @@ theorem capacity_required_for_joint_nocollapse
     (hinfeasible : (ts.map netDrift).sum > Θ) (hΘ : Θ ≥ 0) :
     ∃ t ∈ ts, netDrift t > 0 := by
   by_contra h
-  push_neg at h
+  push Not at h
   -- Generalize the per-track bound *inside* the ∀ so the induction hypothesis
   -- has the right shape (a naive `induction ts` would not re-derive `h` for the
   -- tail). Membership uses the stable `List.mem_cons` iff, not `mem_cons_self`.

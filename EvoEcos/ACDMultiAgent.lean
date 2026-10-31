@@ -79,7 +79,7 @@ theorem complementary_rescue :
   constructor
   · intro hArch w1 w2 hne
     by_contra hall
-    push_neg at hall
+    push Not at hall
     have heq : S.obsCombined w1 = S.obsCombined w2 := by
       ext i
       exact hall i

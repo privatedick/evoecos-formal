@@ -136,7 +136,7 @@ theorem single_crossing_failure :
       (fun _ => (0 : ℝ))  -- cost of wall_off: no erasure, same for all types
    := by
   unfold singleCrossingCondition
-  push_neg
+  push Not
   intro t1 t2
   simp only []
 

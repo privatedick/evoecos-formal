@@ -66,7 +66,7 @@ theorem adversarial_force_counterfactual {W O : Type} (S : ObservationalSetup W 
     ∃ adv : W → W, Counterfactual (AdversarialSetup S adv) := by
   have hne : ∃ w1 w2, S.truth w1 ≠ S.truth w2 := by
     by_contra h
-    push_neg at h
+    push Not at h
     have : TruthConstant S := ⟨S.truth (Nonempty.some ‹_›), fun w => (h (Nonempty.some ‹_›) w).symm⟩
     exact hnc this
   obtain ⟨w1, w2, hne⟩ := hne

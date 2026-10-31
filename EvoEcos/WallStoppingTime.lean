@@ -63,7 +63,7 @@ private theorem monotone_bounded_converges (f : Nat → ℝ) (b : ℝ)
     ∀ ε > (0 : ℝ), ∃ N : Nat, ∀ n ≥ N, |f n - f N| < ε := by
   intro ε h_ε
   by_contra h_not
-  push_neg at h_not
+  push Not at h_not
   have h_grow : ∀ N : Nat, ∃ m ≥ N, f m ≥ f N + ε := by
     intro N
     obtain ⟨m, hm_ge, hm_abs⟩ := h_not N
@@ -175,7 +175,7 @@ theorem wall_activation_is_first_passage {n : Nat} (obs : Fin n → SystemState)
   refine ⟨hk_below, ?_⟩
   intro j hj_lt
   by_contra hj_below
-  push_neg at hj_below
+  push Not at hj_below
   have hj_min := (hk j hj_below).1
   omega
 

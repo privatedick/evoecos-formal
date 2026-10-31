@@ -64,7 +64,35 @@ def offenders (env : Environment) : Array (Name × Array Name) := Id.run do
           out := out.push (c, bad)
   return out
 
+/-- Repo theorem declarations a human wrote: `thmInfo` constants from repo
+modules that carry source declaration ranges and are not internal details
+(this drops equation lemmas, `proof_n` auxiliaries and similar compiler
+output). `lemma` elaborates to a theorem, so it is counted here too. This is
+the number the README cites, derived from the environment rather than a grep. -/
+def sourceTheorems (env : Environment) : Array Name := Id.run do
+  let hdr := env.header
+  let mut out : Array Name := #[]
+  for (modName, modData) in hdr.moduleNames.zip hdr.moduleData do
+    if isRepoModule modName then
+      for c in modData.constNames do
+        if c.isInternalDetail then continue
+        match env.find? c with
+        | some (.thmInfo _) => out := out.push c
+        | _ => pure ()
+  return out
+
 end AxiomAudit
+
+open AxiomAudit in
+run_cmd do
+  let env ← Lean.getEnv
+  let thms := sourceTheorems env
+  let mut withRanges := 0
+  for c in thms do
+    if (← Lean.Elab.Command.liftCoreM (findDeclarationRanges? c)).isSome then
+      withRanges := withRanges + 1
+  Lean.logInfo m!"declaration count: {withRanges} source theorem/lemma \
+    declarations ({thms.size} non-internal theorems in the environment)"
 
 open AxiomAudit in
 run_cmd do

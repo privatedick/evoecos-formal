@@ -99,7 +99,7 @@ theorem tanh_pos_of_pos {x : ℝ} (hx : x > 0) : tanh x > 0 := by
   refine div_pos ?_ (Real.cosh_pos x)
   rw [Real.sinh_eq]
   refine div_pos ?_ two_pos
-  exact sub_pos.mpr (Real.exp_lt_exp_of_lt (by linarith : (-x : ℝ) < x))
+  exact sub_pos.mpr (Real.exp_lt_exp.mpr (by linarith : (-x : ℝ) < x))
 
 /-- For x < 0, tanh x < 0. -/
 theorem tanh_neg_of_neg {x : ℝ} (hx : x < 0) : tanh x < 0 := by
@@ -149,7 +149,7 @@ theorem tanh_saturation_abs {x : ℝ} (hx : |x| > 2) : |tanh x| > 24 / 25 := by
     have ht_pos : tanh x > 0 := tanh_pos_of_pos (by linarith)
     rw [abs_of_pos ht_pos]
     exact tanh_saturation_pos h2
-  · push_neg at h_pos
+  · push Not at h_pos
     have h_neg : -x > 2 := by rwa [abs_of_neg h_pos] at hx
     have ht_neg : tanh x < 0 := tanh_neg_of_neg h_pos
     rw [abs_of_neg ht_neg]
